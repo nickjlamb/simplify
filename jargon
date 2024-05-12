@@ -1,0 +1,18 @@
+from flask import Flask, render_template, request
+from medical_terminology import simplify_term  # Assuming you have a function for simplifying terms
+
+app = Flask(__name__)
+
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+@app.route('/simplify', methods=['POST'])
+def simplify():
+    if request.method == 'POST':
+        term = request.form['term']
+        simplified_term = simplify_term(term)
+        return render_template('result.html', term=term, simplified_term=simplified_term)
+
+if __name__ == '__main__':
+    app.run(debug=True)
